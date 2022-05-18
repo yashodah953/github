@@ -1,0 +1,187 @@
+Git Installation
+- $ sudo apt-get install git
+
+Verify Git version 
+- git --version
+
+Git Configuration
+- In your shell, add your user name:-git config --global user.name "your_username"
+- Add your email address:- git config --global user.email "your_email_address@example.com"
+- Verify the configuration:- git config --global --list ,  git config -l
+- Note : Where, –global option instructs Git to always use this information for anything you do on your system. If you omit –global or use –local, the configuration applies only to the current repository.
+
+Create a new local repository	
+- git init
+
+Checkout a repository
+- Create a working copy of a local repository:- git clone /path/to/repository
+- For a remote server, use:- git clone username@host:/path/to/repository
+
+Add files
+- Add one or more files to staging (index):- git add <filename> , git add *
+
+Commit 
+- Commit changes to head (but not yet to the remote repository):- git commit -m "Commit message"
+- Commit any files you’ve added with git add, and also commit any files you’ve changed since then:- git commit -a 
+
+Push
+- Send changes to the master branch of your remote repository:- git push origin master
+
+Status
+- List the files you’ve changed and those you still need to add or commit:- git status
+
+Connect to a remote repository
+- If you haven’t connected your local repository to a remote server, add the server to be able to push to it:- git remote add origin <server>
+- List all currently configured remote repositories:- git remote -v
+- Create a new branch and switch to it:- git checkout -b <branchname>
+- Switch from one branch to another:- git checkout <branchname>
+- List all the branches in your repo, and also tell you what branch you’re currently in:- git branch
+
+Branches
+- Delete the feature branch:- git branch -d <branchname>
+- Push the branch to your remote repository, so others can use it :- git push origin <branchname>
+- Push all branches to your remote repository:- git push --all origin
+- Delete a branch on your remote repository:- git push origin :<branchname>
+- Fetch and merge changes on the remote server to your working directory:- git pull
+- To merge a different branch into your active branch:- git merge <branchname>
+
+Update from the remote repository
+- View all the merge conflicts: View the conflicts against the base file:- git diff git diff --base <filename>
+- Preview changes, before merging:- git diff <sourcebranch> <targetbranch>
+- After you have manually resolved any conflicts, you mark the changed file:- git add <filename>
+
+Tags
+- You can use tagging to mark a significant changeset, such as a release:- git tag 1.0.0 <commitID>
+- CommitId is the leading character of the changeset ID, up to 10, but must be unique. Get the ID using:- git log
+- Push all tags to the remote repository:- git push --tags origin
+
+Undo local changes
+- If you mess up, you can replace the changes in your working tree with the last content in your head: Changes already added to the index, as well as new files, will be kept:- git checkout -- <filename>
+- Instead, to drop all your local changes and commits, fetch the latest history from the server and point your local master branch at it, do this:- git fetch origin , git reset --hard origin/master
+
+Search
+- Search the working directory for foo():- git grep "foo()" 
+
+Change Git Remote URL
+- $ git remote set-url <remote_name> <remote_url>
+- $ git remote set-url origin https://git-repo/new-repository.git
+- $ git remote -v (to verify the changes were made )
+
+Changing Git Remote to SSH
+- $ git remote set-url <remote_name> <ssh_remote_url>
+- The SSH URL usually takes the following form :- SSH URL : git@<repo_url>:<url>/<git_repository>.git
+- For example, if your repository was configured on Github, you would use the following command to change your remote:- $ git remote set-url origin git@github.com:user/repository.git
+- git remote -v 
+
+Getting Git Remote URL on GitHub
+- If you need to quickly find the URL of your Git remote on Github, you first need to select your repository by navigating to your repository list:-  > https://github.com/<user>/repositories
+
+Git Branches
+- create a new branch as per your currently checked out (HEAD) branch:- $ git branch <new-branch>
+- Creating a Git branch using checkout:- $ git checkout -b <branch-name>
+
+Create Git Branch without switching
+- create a new Git branch, without switching to this new branch, you have to use the “git branch” :- $ git branch <branch_name>
+- Later on, you can switch to your new Git branch by using the “git checkout” function:- $ git checkout <branch_name>
+- $ git branch -a
+
+Create Git Branch from Commit
+-  to create a Git branch from a specific commit in your Git history command with the “-b” option and specify the branch name as well as the commit to creating your branch from:- $ git checkout -b <branch_name> <commit_sha>
+-  Alternatively, you can use the “git branch” command with the branch name and the commit SHA for the new branch:- $ git branch <branch_name> <commit_sha>
+- To get commits SHA from your history, you have to use the “git log” with the “–oneline” option:- $ git log --oneline --graph
+-  To create a new Git branch from the second commit (f2fcb99), you would run the following command:- $ git checkout -b feature f2fcb99 where f2fcb99 is commitid example .
+
+Create Git Branch from Tag
+- To create a new Git branch from a tag:- $ git checkout -b <branch_name> <tag_name>
+- Alternatively, if you don’t want to switch to your new branch:- $ git branch <branch_name> <tag_name> , for ex :- $ git checkout -b feature v1.0
+- To list your existing tags:- $ git tag 
+- ex :- $ git branch feature v1.0
+
+How to create a new branch from a remote branch?
+- If you require to take a remote branch based on your new local branch, you can utilize the “–track” option:- $ git branch --track <new-branch> origin/<base-branch> 
+- If you want to name the local branch like the remote one, you only have to define the remote branch’s name:- $ git checkout --track origin/<base-branch>
+- $ git push -u origin <local-branch>:- The “-u” flag tells Git to establish a “tracking connection”, which will make pushing and pulling much easier in the future.
+
+Create Git Patch Files using git format-patch
+- To create a Git patch file, you have to use the “git format-patch” command, specify the branch and the target directory where you want your patches to be stored:- $ git format-patch <branch> &lt;options>
+
+Creating a Git patch with git diff
+- If you want to see commits differences between the target branch and the current checked-out branch, use the “git diff” command and specify the target and the destination branch:-
+- $ git diff --oneline --graph <branch>..<current_branch>
+
+ creating patch files from commits
+ - $ git format-patch masterom commits
+ 
+Creating Git Patch Files in a Directory
+- $ git format-patch <branch> -o <directory>
+-for ex:-  $ git format-patch master -o patches
+
+Create Git Patch for Specific Commit
+- In order to create a Git patch file for a specific commit, use the “git format-patch” command with the “-1” option and the commit SHA:- $ git format-patch -1 <commit_sha>
+
+Apply Git Patch Files
+- $ git am <patch_file>
+- Referring to our previous example, make sure to check out the branch where you want your patch file to be applied : -for ex- $ git checkout feature
+- Now that you are on your branch, apply your Git patch file with the “git am” command-   for ex :- $ git am patches/0001-My-feature-commit-1.patch
+- Git Apply Patch failed: file already exists in Index : - $ git ls-files --stage <directory>
+
+Git Commands: Working With Local Repositories
+-  # make directory a git repository:-   $ git init
+- # change directory to codebase:- $ cd /file/path/to/code
+- To add those files to the staging area :- $ git add <file or directory name>
+- # To add all files not staged:- $ git add .
+- # To stage a specific file:- $ git add index.html 
+- # To stage an entire directory:- $ git add css
+- # Adding a commit with message:- $ git commit -m "Commit message in quotes"
+- $ git status
+- $ git config <setting> <command>
+- # Create a new branch:- $ git branch <branch_name>
+- # List all remote or local branches:- $ git branch -a
+- # Delete a branch:- $ git branch -d <branch_name>
+- # Checkout an existing branch:-$ git checkout <branch_name>
+- # Checkout and create a new branch with that name:- $ git checkout -b <new_branch>
+- # Merge changes into current branch:- $ git merge <branch_name>
+
+Git Commands: Working With Remote Repositories
+- # Add remote repository:- $ git remote <command> <remote_name> <remote_URL>
+- # List named remote repositories:- $ git remote -v
+- $ git clone <remote_URL>
+- $ git pull <branch_name> <remote_URL/remote_name>
+- $ git push <remote_URL/remote_name> <branch>
+- # Push all local branches to remote repository:- $ git push —all
+- git diff
+- git diff --base <filename>
+- git diff <sourcebranch> <targetbranch>
+- git diff –staged
+- If you want to unstage the file :- git reset [file]
+- The following git reset command discards all history and goes back to the specified commit :- git reset –hard [commit]
+-  # Store current work with untracked files:- $ git stash -u
+-  # Bring stashed work back to the working directory:- $ git stash pop
+- Stash a specific file :- $ git stash push -m "message" <file>
+- Stash untracked files :- $ git stash --include-untracked ,$ git stash -u
+- Specific Git Stash Branch :- $ git stash branch <branch_name>
+- git rm : # To remove a file from the working index (cached):
+                $ git rm --cached <file name>
+              - # To delete a file (force) 
+                $ git rm -f <file name>
+             - # To remove an entire directory from the working index (cached)
+			    $ git rm -r --cached <directory name>
+- # To delete an entire directory (force) :-$ git rm -r -f <file name>
+- git log: # Show entire git log
+              $ git log
+              - # Show git log with date pameters
+                $ git log --<after/before/since/until>=<date>
+              - # Show git log based on commit author
+                $ git log --<author>="Author Name"
+				
+- git show : This command displays the metadata and content changes of the defined commit.
+  git show [commit]
+  
+-  git tag : The tag command is used to provide tags to the defined commit.
+   git tag [commitID] 
+   How do you Create Git Tag? : $ git tag <tag_name>
+   Create Tag with Message : $ git tag -a <tag_name> -m "message"
+   Push your created tags : $ git push --tags
+   
+
+
